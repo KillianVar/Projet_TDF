@@ -12,3 +12,7 @@
 - Modélisation de l'arbre pour répondre au problème posé :
   - tentative n°1 : échec de la modélisation pour satisfaire les conditions du problème posé
   - tentative n°2 : pas de contrindication des conditions du problème
+
+## v0.0.3
+
+- Ajout d'un fichier "tree_builder.py" dont le but est de construire l'arbre sous forme de graphe pour pouvoir réaliser les calculs de relations.
