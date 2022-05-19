@@ -9,4 +9,4 @@ Le but de ce projet est de permettre
 
 - Initial Commit : acquisition d'un arbre test sous format GEDCOM (famille royale anglaise)
 - Acquisition d'une librairie python : python-gedcom (https://pypi.org/project/python-gedcom/) pour parser le fichier GEDCOM
-- Définition du problème de lien de parenté, et étude mathématique : fichier family_relationship_study.ipynb
+- Définition du problème de lien de parenté et étude mathématique : fichier family_relationship_study.ipynb
