@@ -15,4 +15,6 @@
 
 ## v0.0.3
 
-- Ajout d'un fichier "tree_builder.py" dont le but est de construire l'arbre sous forme de graphe pour pouvoir réaliser les calculs de relations.
+- Ajout d'un fichier "tree_builder.py" dont le but est de construire l'arbre sous forme de graphe pour pouvoir 
+réaliser les calculs de relations.
+- Définition d'une stratégie d'écriture du code, et de la structure pour former le graphe.
