@@ -19,8 +19,8 @@
 réaliser les calculs de relations.
 - Définition d'une stratégie d'écriture du code, et de la structure pour former le graphe.
 
-## 01/06
+## v0.1.0 (01/06)
 
-- Choix de la base de données sous la forme d'un dictionnaire
+- Choix de la base de données sous la forme d'un dictionnaire de dictionnaires {'ID1' : {'name' : ..., 'father' : ..., ...}, 'ID2' : {}, ...}
 - Création progressive de la base de données à partir du fichier GedCom
 - Création de l'algorithme de parcours *basique* du graphe : trouve l'ancêtre commun et donne la longueur des liens directs seulement pour le moment 
