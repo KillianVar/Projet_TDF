@@ -32,13 +32,12 @@ for element in root_child_elements:
         bdd_i["surname"] = surname
         bdd_i["gender"] = element.get_gender()
         parents = gedcom_parser.get_parents(element)
-
-        bdd_i["father"]
-        bdd_i["mother"]
+        if len(parents) != 0:
+            bdd_i["father"] = str(parents[0]).split()[1]
+            if len(parents) !=1:
+                bdd_i["mother"] = str(parents[1]).split()[1]
 
         print(bdd)
-
-        #print(bdd)
 
         # Lets inspect this element :
 
