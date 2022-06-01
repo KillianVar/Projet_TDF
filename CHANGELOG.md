@@ -18,3 +18,9 @@
 - Ajout d'un fichier "tree_builder.py" dont le but est de construire l'arbre sous forme de graphe pour pouvoir 
 réaliser les calculs de relations.
 - Définition d'une stratégie d'écriture du code, et de la structure pour former le graphe.
+
+## 01/06
+
+- Choix de la base de données sous la forme d'un dictionnaire
+- Création progressive de la base de données à partir du fichier GedCom
+- Création de l'algorithme de parcours *basique* du graphe : trouve l'ancêtre commun et donne la longueur des liens directs seulement pour le moment 

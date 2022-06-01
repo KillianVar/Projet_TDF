@@ -22,7 +22,7 @@ root_child_elements = gedcom_parser.get_root_child_elements()
 
 # Iterate through all root child elements
 for element in root_child_elements:
-
+    
     # Is the `element` an actual `IndividualElement`?
     # (Allows usage of extra functions such as `surname_match` and `get_name`.)
     if isinstance(element, IndividualElement):
