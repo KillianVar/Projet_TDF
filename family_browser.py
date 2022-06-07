@@ -12,7 +12,7 @@ import random as rd
 # code :
 
 # Path to your `.ged` file
-file_path = 'Queen_Eliz_II.ged'
+file_path = 'Database/Queen_Eliz_II.ged'
 
 # Initialize the parser
 gedcom_parser = Parser()
@@ -58,3 +58,13 @@ for element in root_child_elements:
         except ValueError:
             pass
 
+        try:
+            families = gedcom_parser.get_families(element)
+            if len(families) > 0 :
+                for family in families:
+                    print('--*--' * 30)
+                    for family_members in gedcom_parser.get_family_members(family):
+                        print(str(family_members).split()[1], family_members.get_name())
+
+        except Exception:
+            pass

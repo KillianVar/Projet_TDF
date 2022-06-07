@@ -21,6 +21,6 @@ réaliser les calculs de relations.
 
 ## v0.1.0 (01/06)
 
-- Choix de la base de données sous la forme d'un dictionnaire de dictionnaires {'ID1' : {'name' : ..., 'father' : ..., ...}, 'ID2' : {}, ...}
+- Choix de la base de données sous la forme d'un dictionnaire de dictionnaires {'ID1' : {'name' : ..., 'parent_1' : ..., ...}, 'ID2' : {}, ...}
 - Création progressive de la base de données à partir du fichier GedCom
 - Création de l'algorithme de parcours *basique* du graphe : trouve l'ancêtre commun et donne la longueur des liens directs seulement pour le moment 

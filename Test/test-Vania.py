@@ -5,7 +5,7 @@ from gedcom.element.family import FamilyElement
 
 
 gedcom_parser = Parser()
-file_path = 'Queen_Eliz_II.ged'
+file_path = '/Database/Queen_Eliz_II.ged'
 gedcom_parser.parse_file(file_path, False)
 
 
@@ -37,7 +37,10 @@ for element in root_child_elements:
             if len(parents) !=1:
                 bdd_i["mother"] = str(parents[1]).split()[1]
 
-print(bdd['@I914@']['father'])
+print(bdd['@I920@']['father'])
+print(bdd['@I919@']['father'])
+print(bdd['@I920@']['mother'])
+print(bdd['@I919@']['mother'])
 
 
 def chemin(bdd, id1, id2):
@@ -61,7 +64,8 @@ def chemin(bdd, id1, id2):
                     if m in list2[j]:
                         common_ancestor = m
                         t = False
+    print(list1, list2)
     return f"Le plus court chemin vaut {i+j} et leur ancêtre commun est {common_ancestor}"
 
 
-print(chemin(bdd, '@I919@', '@I928@'))
+print(chemin(bdd, '@I921@', '@I920@'))
