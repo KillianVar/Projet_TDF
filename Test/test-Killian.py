@@ -1,4 +1,5 @@
 import json
+import numpy as np
 from gedcom.element.individual import IndividualElement
 from gedcom.parser import Parser
 from gedcom.element.element import Element
@@ -12,11 +13,14 @@ gedcom_parser.parse_file(file_path, False)
 
 bdd = {}
 root_child_elements = gedcom_parser.get_root_child_elements()
+count_people = 0
 
 # Iterate through all root child elements
 for element in root_child_elements:
 
     if isinstance(element, IndividualElement):
+
+        count_people += 1
 
         # creation of a dictionnary for the Individual
 
@@ -64,36 +68,41 @@ for element in root_child_elements:
                     if family_members.get_tag() == 'CHIL':
                         links[f'child_{count + 1}'] = str(family_members).split()[2]
 
+                        if str(family_members).split()[2] not in bdd.keys():
+                            bdd[str(family_members).split()[2]] = {'name' : None, 'links' : {}}
+
 # ---------- #
 # parameters for the calculus graph
 
 alpha = 1.
 
-# bdd_calculus
+# bdd_calculus_intermediate
 
-bdd_calculus = {}
+bdd_calculus_intermediate = {}
 
 for key, value in bdd.items():
 
-    bdd_calculus[key] = {}
-    links = bdd_calculus[key]
+    bdd_calculus_intermediate[key] = {}
+    links = bdd_calculus_intermediate[key]
 
     for relation_type, linked_person in value['links'].items():
 
-        if 'parent' in relation_type:
-            links[linked_person] = {'type' : 'parent', 'length' : alpha}
-
-        if 'child' in relation_type:
-            links[linked_person] = {'type' : 'child', 'length' : alpha}
+        if 'parent' in relation_type or 'child' in relation_type:
+            links[linked_person] = alpha
 
 
-path_dbb_content = "../Database/database_conversion.json"
-python_file = open(path_dbb_content, "w+")
-json.dump(bdd, python_file)
-python_file.close()
 
-path_dbb_calculus = "../Database/database_calculus.json"
-bdd_calculus_file = open(path_dbb_calculus, "w+")
-json.dump(bdd_calculus, bdd_calculus_file)
-python_file.close()
+def saver_base():
 
+    path_dbb_content = "../Database/database_conversion.json"
+    python_file = open(path_dbb_content, "w+")
+    json.dump(bdd, python_file)
+    python_file.close()
+
+    path_dbb_calculus_intermediate = "../Database/database_calculus.json"
+    bdd_calculus_file = open(path_dbb_calculus_intermediate, "w+")
+    json.dump(bdd_calculus_intermediate, bdd_calculus_file)
+    bdd_calculus_file.close()
+
+
+saver_base()
