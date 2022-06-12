@@ -21,9 +21,11 @@ réaliser les calculs de relations.
 
 ## v0.1.0 (01/06)
 
-- Choix de la base de données sous la forme d'un dictionnaire de dictionnaires {'ID1' : {'name' : ..., 'parent_1' : ..., ...}, 'ID2' : {}, ...}
+- Choix de la base de données sous la forme d'un dictionnaire de dictionnaires {'ID1' :
+{'name' : ..., 'parent_1' : ..., ...}, 'ID2' : {}, ...}
 - Création progressive de la base de données à partir du fichier GedCom
-- Création de l'algorithme de parcours *basique* du graphe : trouve l'ancêtre commun et donne la longueur des liens directs seulement pour le moment
+- Création de l'algorithme de parcours *basique* du graphe : trouve l'ancêtre commun et donne la 
+longueur des liens directs seulement pour le moment
 
 ## v1.0.0 (09/06)
 
@@ -33,3 +35,11 @@ réaliser les calculs de relations.
 format .json pour le calcul
 - Implémentation de l'algorithme de calcul de Dijkstra pour calculer le plus court chemin entre deux individus
 de la base de donnée
+
+## v1.1.0 (12/06)
+
+- Séparation de l'analyseur d'arbre pour compléter les liens de la base de donnée de l'algorithme
+de création de la base de donnée
+- Implémentation de l'analyse de l'arbre pour ajouter les liens de grand-parents, petits enfants, oncles et tantes
+- Implémentation d'un algorithme donnant le lien sémantique entre les deux individus à partir des résultats
+obtenus par l'algorithme de Dijkstra
