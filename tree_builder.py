@@ -1,44 +1,236 @@
-import uuid
+import json
+from gedcom.element.individual import IndividualElement
+from gedcom.parser import Parser
+
+gedcom_parser = Parser()
+
+file_path = '../Database/Queen_Eliz_II.ged'
+gedcom_parser.parse_file(file_path, False)
+
+# Essai de la construction de la BDD
+
+bdd = {}
+root_child_elements = gedcom_parser.get_root_child_elements()
+count_people = 0
+
+# Iterate through all root child elements
+for element in root_child_elements:
+
+    if isinstance(element, IndividualElement):
+
+        count_people += 1
+
+        # creation of a dictionnary for the Individual
+
+        id_person = str(element).split()[1]
+        bdd[f"{id_person}"] = {}
+
+        # Filling the dictionnary of the individual
+
+        bdd_i = bdd[f"{id_person}"]
+        name, surname = element.get_name()
+        bdd_i["name"] = name
+        bdd_i["surname"] = surname
+        bdd_i["gender"] = element.get_gender()
+
+        # Add links between people
+        # Start by creating the links dictionnary that will contain all links for one person
+
+        bdd_i['links'] = {}
+        links = bdd_i['links']
+
+        # Adding ascending parental links
+
+        parents = gedcom_parser.get_parents(element)
+        count = 0
+
+        if len(parents) != 0:
+
+            while len(parents) > 0:
+                parent = parents[0]
+                parent = str(parent).split()[1]
+                links[f'parent_{count + 1}'] = parent
+                count += 1
+                parents.pop(0)
+
+        # Adding descending parental links
+
+        families = gedcom_parser.get_families(element)
+        count = 0
+
+        if len(families) > 0:
+
+            for family in families:
+
+                elements = family.get_child_elements()
+
+                for family_members in family.get_child_elements():
+
+                    if family_members.get_tag() == 'CHIL':
+
+                        child = str(family_members).split()[2]
+
+                        if child not in links.values():
+
+                            links[f'child_{count + 1}'] = child
+                            count += 1
+
+                        if str(family_members).split()[2] not in bdd.keys():
+
+                            bdd[str(family_members).split()[2]] = {'name': None, 'links': {}}
+
+# Adding secondary links
+
+# Adding siblings :
+
+for person, person_data in bdd.items():
+
+    sibling_count = 1
+
+    if 'parent_1' in list(person_data['links'].keys()):
+
+        parent_1 = person_data['links']['parent_1']
+
+        for relation_type, related_person in bdd[parent_1]['links'].items():
+
+            checker = ('child' in relation_type) and not ('grandchild' in relation_type)
+            checker = checker and related_person is not person
+
+            if checker:
+
+                bdd[person]['links'][f'sibling_{sibling_count}'] = related_person
+                sibling_count += 1
 
 
-class FamilyMembers:
-    """Defining a member of the family tree"""
-
-    # Initialization of the family tree
-    family_tree = {}
-    family_ID = {}
-
-    # Initialization of family
-    def __init__(self, name, surname='', details='', birth_date='', death_date='', links=None):
-        """
-        initialization of the instance, with name, surname
-        :param name:
-        should be a string precising the name of the new family member.
-        :param surname:
-        should be a string precising the surname of new family member.
-        :param details:
-        should be a string containing diverse information, anecdotes about the new family member.
-        :param birth_date:
-        string precising the birth date.
-        :param death_date:
-        string precising the death date.
-        :param links:
-        should be a dictionnary containing relationship between the new family members and the rest of the family tree.
-        The keys must be their exact names, and the link
-        """
-
-        if links is None:
-            distances = {}
-
-        self.name = name
-        self.surname = surname
-        self.details = details
-        self.birth_date = birth_date
-        self.death_date = death_date
-        self.ID = uuid.uuid4()
-        self.family_update(distances)
 
 
-    def family_upate(self, distances):
-        FamilyMembers.family_tree[self.ID] = distances
+# Starting by grandparents
 
+for person, person_data in bdd.items():
+
+    links = person_data['links']
+    links_copy = person_data['links'].copy()
+    count_grandparent = 0
+
+    for link_type, linked_person in links_copy.items():
+
+        if 'parent' in link_type:
+
+            parents = bdd[linked_person]['links']
+
+            for secondary_linked_type, secondary_linked_person in parents.items():
+
+                checker = 'parent' in secondary_linked_type and secondary_linked_person not in links.keys()
+                checker = checker and 'grand' not in secondary_linked_type
+
+                if checker:
+
+                    links[f'grandparent_{count_grandparent + 1}'] = secondary_linked_person
+
+                    count_grandparent += 1
+
+
+# adding grandchildren
+
+for grandchildren, grandchildren_data in bdd.items():
+
+    links = grandchildren_data['links']
+    links_copy = links.copy()
+
+    for link_type, linked_person in links_copy.items():
+
+        if 'grandparent' in link_type:
+
+            grandparent_links = bdd[linked_person]['links']
+
+            n_grand_children = 0
+
+            for relation_grandchildren in grandparent_links.keys():
+
+                if 'grandchildren' in relation_grandchildren :
+
+                    n_grand_children += 1
+
+            grandparent_links[f'grandchildren_{n_grand_children + 1}'] = grandchildren
+
+
+# Adding aunts / uncles
+
+for grandparent, grandparent_data in bdd.items():
+
+    grandparent_links = grandparent_data['links']
+    links_copy = grandparent_links.copy()
+
+    for link_type, linked_person in links_copy.items():
+
+        if 'grandchildren' in link_type:
+
+            grandchildren = linked_person
+
+            aunt_counter = 1
+
+            # let's count the uncles and aunts the grandchild already has :
+
+            for relation_type, related_person in grandparent_links.items():
+
+                if 'aunt_uncle' in relation_type:
+
+                    aunt_counter += 1
+
+            # let's add to the grandchild new uncles and aunts :
+
+            for relation_type, related_person in grandparent_links.items():
+
+                if 'sibling' in relation_type and related_person not in bdd[grandchildren]['links'].values():
+
+                    bdd[grandchildren]['links'][f'aunt_uncle_{aunt_counter}'] = related_person
+
+
+
+
+
+# ---------- #
+# parameters for the calculus graph
+
+alpha = 1.
+beta = 1.5
+
+# bdd_calculus_intermediate
+
+bdd_calculus_intermediate = {}
+
+for key, value in bdd.items():
+
+    bdd_calculus_intermediate[key] = {}
+    links = bdd_calculus_intermediate[key]
+
+    for relation_type, linked_person in value['links'].items():
+
+        checker_1 = 'parent' in relation_type or 'child' in relation_type
+        checker_1 = checker_1 and not 'grand' in relation_type
+        checker_2 = 'grandparent' in relation_type or 'grandchild' in relation_type
+
+        if checker_1:
+
+            links[linked_person] = alpha
+
+        elif checker_2:
+
+            links[linked_person] = beta
+
+
+
+def saver_base():
+
+    path_dbb_content = "../Database/database_conversion.json"
+    python_file = open(path_dbb_content, "w+")
+    json.dump(bdd, python_file)
+    python_file.close()
+
+    path_dbb_calculus_intermediate = "../Database/database_calculus.json"
+    bdd_calculus_file = open(path_dbb_calculus_intermediate, "w+")
+    json.dump(bdd_calculus_intermediate, bdd_calculus_file)
+    bdd_calculus_file.close()
+
+
+saver_base()

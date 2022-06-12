@@ -1,8 +1,6 @@
 import sys
 import json
 
-import sys
-
 
 class Graph(object):
     def __init__(self, nodes, init_graph):
@@ -85,26 +83,42 @@ def dijkstra_algorithm(graph, start_node):
     return previous_nodes, shortest_path
 
 
-def print_result(previous_nodes, shortest_path, start_node, target_node):
+def print_result(previous_nodes, shortest_path, start_node, target_node, relations={}):
     path = []
     node = target_node
 
     while node != start_node:
+
         path.append(node)
         node = previous_nodes[node]
 
     # Add the start node manually
     path.append(start_node)
+    path = list(reversed(path))
+
+    links = []
+
+    for count in range(len(path) - 1):
+
+        all_links = relations[path[count]]['links']
+        desired_link = list(all_links.values()).index(path[count + 1])
+        link = list(all_links.keys())[desired_link]
+        links.append(link)
 
     print("We found the following best path with a value of {}.".format(shortest_path[target_node]))
-    print(" -> ".join(reversed(path)))
+    print(" -> ".join(path))
+    print(" -> ".join(links))
 
 
 if __name__ == '__main__':
 
-    file = open('../Database/database_calculus.json')
-    init_graph = json.load(file)
-    file.close()
+    file_calculus = open('../Database/database_calculus.json')
+    init_graph = json.load(file_calculus)
+    file_calculus.close()
+
+    file_relations = open('../Database/database_conversion.json')
+    relations = json.load(file_relations)
+    file_relations.close()
 
     nodes = list(init_graph.keys())
 
@@ -112,5 +126,5 @@ if __name__ == '__main__':
 
     previous_nodes, shortest_path = dijkstra_algorithm(graph=people_graph, start_node="@I103@")
 
-    print_result(previous_nodes, shortest_path, "@I103@", "@I6087@")
+    print_result(previous_nodes, shortest_path, "@I103@", "@I6012@", relations=relations)
 
