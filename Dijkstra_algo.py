@@ -84,7 +84,9 @@ def dijkstra_algorithm(graph, start_node):
 
 
 def print_result(previous_nodes, shortest_path, start_node, target_node, relations={}):
+
     path = []
+    people = []
     node = target_node
 
     while node != start_node:
@@ -96,27 +98,49 @@ def print_result(previous_nodes, shortest_path, start_node, target_node, relatio
     path.append(start_node)
     path = list(reversed(path))
 
+
     links = []
 
-    for count in range(len(path) - 1):
+    if relations != {}:
+        for count in range(len(path) - 1):
 
-        all_links = relations[path[count]]['links']
-        desired_link = list(all_links.values()).index(path[count + 1])
-        link = list(all_links.keys())[desired_link]
-        links.append(link)
+            all_links = relations[path[count]]['links']
+            desired_link = list(all_links.values()).index(path[count + 1])
+            link = list(all_links.keys())[desired_link]
+            links.append(link)
+
+        for id in path:
+
+            people_surname, people_name = '', ''
+
+            try :
+                if relations[id]['name'] is not 'null':
+                    people_name = relations[id]['name']
+
+                try:
+                    if relations[id]['surname'] is not 'null':
+                        people_surname = relations[id]['surname']
+                except KeyError:
+                    people_surname = 'unknown_SURNAME'
+            except KeyError:
+                people_name = 'unknown_NAME'
+
+            people_complete_name = f'{people_name}, {people_surname}'
+
+            people.append(people_complete_name)
 
     print("We found the following best path with a value of {}.".format(shortest_path[target_node]))
-    print(" -> ".join(path))
+    print(" -> ".join(people))
     print(" -> ".join(links))
 
 
 if __name__ == '__main__':
 
-    file_calculus = open('../Database/database_calculus.json')
+    file_calculus = open('Database/database_calculus.json')
     init_graph = json.load(file_calculus)
     file_calculus.close()
 
-    file_relations = open('../Database/database_conversion.json')
+    file_relations = open('Database/database_conversion.json')
     relations = json.load(file_relations)
     file_relations.close()
 

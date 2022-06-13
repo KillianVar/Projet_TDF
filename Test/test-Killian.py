@@ -154,7 +154,7 @@ for grandchildren, grandchildren_data in bdd.items():
             grandparent_links[f'grandchildren_{n_grand_children + 1}'] = grandchildren
 
 
-# Adding aunts / uncles
+# Adding aunts / uncles :
 
 for grandparent, grandparent_data in bdd.items():
 
@@ -186,6 +186,35 @@ for grandparent, grandparent_data in bdd.items():
                     bdd[grandchildren]['links'][f'aunt_uncle_{aunt_counter}'] = related_person
 
 
+
+# Adding nephews :
+
+
+for nephew, nephew_data in bdd.items():
+
+    nephew_links = nephew_data['links']
+    links_copy = nephew_links.copy()
+
+    for link_type, linked_person in links_copy.items():
+
+        if 'aunt_uncle' in link_type:
+
+            aunt_uncle = linked_person
+            aunt_uncle_links = bdd[aunt_uncle]['links']
+
+            nephew_counter = 1
+
+            # let's count the nephews and nieces the aunt_uncle already has :
+
+            for relation_type, related_person in aunt_uncle_links.items():
+
+                if 'nephew' in relation_type:
+
+                    nephew_counter += 1
+
+            if not nephew in list(aunt_uncle_links.values()):
+
+                aunt_uncle_links[f'nephew_{nephew_counter}'] = nephew
 
 
 
@@ -240,3 +269,4 @@ def saver_base():
 
 
 saver_base()
+
