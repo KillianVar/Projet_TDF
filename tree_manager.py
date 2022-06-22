@@ -64,7 +64,7 @@ def gedcom_converter(file_path):
 
                     elements = family.get_child_elements()
 
-                    for family_members in family.get_child_elements():
+                    for family_members in elements:
 
                         if family_members.get_tag() == 'CHIL':
 
