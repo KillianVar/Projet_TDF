@@ -133,7 +133,7 @@ def print_result(previous_nodes, shortest_path, start_node, target_node, relatio
     print(" -> ".join(people))
     print(" -> ".join(links))
 
-    return links, path
+    return (links, path)
 
 
 if __name__ == '__main__':

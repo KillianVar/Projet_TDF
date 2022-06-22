@@ -214,6 +214,33 @@ def tree_linker(bdd):
 
                     aunt_uncle_links[f'nephew_{nephew_counter}'] = nephew
 
+    # Adding cousins :
+
+    for person, person_data in bdd.items():
+
+        person_links_copy = person_data['links'].copy()
+        person_links = person_data['links']
+
+        cousins_count = 1
+
+        for link_type, person_linked in person_links_copy.items():
+
+            grandparent = ''
+
+            if 'grandparent' in link_type:
+
+                grandparent = person_linked
+
+                for link_grandchildren, grandchildren in bdd[grandparent]['links'].items():
+
+                    check_bol = 'grandchildren' in link_grandchildren and grandchildren is not person
+
+                    if check_bol:
+
+                        person_links[f'cousin_{cousins_count}'] = grandchildren
+                        cousins_count += 1
+
+
 
 def graph_calulator(bdd):
 
@@ -223,6 +250,7 @@ def graph_calulator(bdd):
     alpha = 1.
     beta = 1.5
     gamma = 1.7
+    delta = 2.
 
     # bdd_calculus_intermediate
 
@@ -240,6 +268,7 @@ def graph_calulator(bdd):
             checker_2 = 'grandparent' in relation_type or 'grandchild' in relation_type
             checker_3 = 'sibling' in relation_type
             checker_4 = 'aunt_uncle' in relation_type or 'nephew' in relation_type
+            checker_5 = 'cousin' in relation_type
 
             if checker_1 or checker_3:
 
@@ -252,6 +281,10 @@ def graph_calulator(bdd):
             elif checker_4:
 
                 links[linked_person] = gamma
+
+            elif checker_5:
+
+                links[linked_person] = delta
 
     return bdd_calculus_intermediate
 

@@ -16,6 +16,8 @@ def reloader():
     tree_manager.saver_base(bdd, 'database_conversion')
     tree_manager.saver_base(graph_calculus, 'database_calculus')
 
+reloader()
+
 file_calculus = open('../Database/database_calculus.json')
 init_graph = json.load(file_calculus)
 file_calculus.close()
