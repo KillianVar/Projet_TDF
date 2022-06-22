@@ -60,5 +60,5 @@ def visualisation (id1, id2):
         G.addEdge(f"{list_relations[i]}, ':', {list_people_related[i]}", f"{list_relations[i+1]}, ':', {list_people_related[i+1]}")
     G.visualize()
 
-
-
+a = 1,2,3
+print (a)

@@ -25,7 +25,7 @@ class GraphVisualization:
     # plt.show() - displays the graph
     def visualize(self):
         G = nx.Graph()
-        G.add_edges_from(self.visual)
+        G.add_weighted_edges_from(self.visual[0],self.visual[0],'weight')
         nx.draw_networkx(G)
         plt.show()
   
