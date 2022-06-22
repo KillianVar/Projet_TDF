@@ -38,9 +38,8 @@ from gedcom.parser import Parser
 from Dijkstra_algo import Graph, dijkstra_algorithm, print_result
 
 
-def visualisation (id1, id2):
-    name1, surname1 = id1.get_name()
-
+def visualization (id1, id2):
+    
     file_calculus = open('Database/database_calculus.json')
     init_graph = json.load(file_calculus)
     file_calculus.close()
@@ -48,6 +47,8 @@ def visualisation (id1, id2):
     file_relations = open('Database/database_conversion.json')
     relations = json.load(file_relations)
     file_relations.close()
+
+    name1, surname1 = relations[id1]["name"], relations[id1]["surname"]
 
     nodes = list(init_graph.keys())
     people_graph = Graph(nodes, init_graph)
@@ -61,4 +62,4 @@ def visualisation (id1, id2):
     G.visualize()
 
 
-
+print(visualization("@I398@", "@I406@"))
