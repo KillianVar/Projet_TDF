@@ -52,11 +52,14 @@ def visualization (id1, id2):
 
     nodes = list(init_graph.keys())
     people_graph = Graph(nodes, init_graph)
-    list_relations, list_people_related = dijkstra_algorithm(graph=people_graph, start_node=id1)
+
+    previous_nodes, shortest_path = dijkstra_algorithm(graph=people_graph, start_node=id1)
+    list_relations, list_people_related = print_result(previous_nodes, shortest_path, id1, id2, relations=relations) #create two lists : one with the relations that connect the two people and one with the ids of the people in between 
+
 
     # Contruction of the visualization 
     G = GraphVisualization()
-    G.addEdge(f"{name1} {surname1}", f"{list_relations[0]}, ':', {list_people_related[0]}" )
+    G.addEdge(f"origin : {id1}", f"{list_relations[0]}, ':', {list_people_related[0]}" )
     for i in range(1, len(list_relations)-1):
         G.addEdge(f"{list_relations[i]}, ':', {list_people_related[i]}", f"{list_relations[i+1]}, ':', {list_people_related[i+1]}")
     G.visualize()
