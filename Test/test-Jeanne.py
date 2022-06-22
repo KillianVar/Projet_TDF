@@ -32,8 +32,8 @@ class GraphVisualization:
 # Driver code
 dict = {"individual" : 'Jeanne', "Sister" : 'Lilas', 'Husband' :'Ewald'} #à modifier = dictionnaire contenant les liens de la personne
 G = GraphVisualization()
-L = dict.values() #list of values, ie of the members of the family betwen the two persons, the first person is person_1 and the last person_2 we wanted to know the link
+L = dict.keys() #list of values, ie of the members of the family betwen the two persons, the first person is person_1 and the last person_2 we wanted to know the link
 for i in range(len(L)-1):
-    G.addEdge(L[i], L[i+1])
+G.addEdge(L[i], ':', dict[L[i]], L[i+1], ':', dict[L[i+1]])
 G.visualize()
 
