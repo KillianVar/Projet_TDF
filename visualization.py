@@ -60,7 +60,7 @@ def visualization (id1, id2):
     # Contruction of the visualization 
     G = GraphVisualization()
     G.addEdge(f"origin : {id1}", f"{list_relations[0]}, ':', {list_people_related[0]}" )
-    for i in range(1, len(list_relations)-1):
+    for i in range(0, len(list_relations)-1):
         G.addEdge(f"{list_relations[i]}, ':', {list_people_related[i]}", f"{list_relations[i+1]}, ':', {list_people_related[i+1]}")
     G.visualize()
 
