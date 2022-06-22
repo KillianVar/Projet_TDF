@@ -30,12 +30,35 @@ class GraphVisualization:
         plt.show()
   
 # Driver code
-dict = {"individual" : 'Jeanne', "Sister" : 'Lilas', 'Husband' :'Ewald'} #à modifier = dictionnaire contenant les liens de la personne
-G = GraphVisualization()
-keys = [] 
-for key in dict.keys():
-    keys.append(key)
-for i in range(len(keys)-1):
-    G.addEdge(f"{keys[i]}, ':', {dict[keys[i]]}", f"{keys[i+1]}, ':', {dict[keys[i+1]]}")
-G.visualize()
+# We're going to use the Dijstra_algo.py file to get the relations between two persons
+import sys
+import json
+from gedcom.element.individual import IndividualElement
+from gedcom.parser import Parser
+from Dijkstra_algo import Graph, dijkstra_algorithm, print_result
+
+
+def visualisation (id1, id2):
+    name1, surname1 = id1.get_name()
+
+    file_calculus = open('Database/database_calculus.json')
+    init_graph = json.load(file_calculus)
+    file_calculus.close()
+
+    file_relations = open('Database/database_conversion.json')
+    relations = json.load(file_relations)
+    file_relations.close()
+
+    nodes = list(init_graph.keys())
+    people_graph = Graph(nodes, init_graph)
+    list_relations, list_people_related = dijkstra_algorithm(graph=people_graph, start_node=id1)
+
+    # Contruction of the visualization 
+    G = GraphVisualization()
+    G.addEdge(f"{name1} {surname1}", f"{list_relations[0]}, ':', {list_people_related[0]}" )
+    for i in range(1, len(list_relations)-1):
+        G.addEdge(f"{list_relations[i]}, ':', {list_people_related[i]}", f"{list_relations[i+1]}, ':', {list_people_related[i+1]}")
+    G.visualize()
+
+
 
