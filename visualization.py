@@ -61,5 +61,13 @@ def visualization (id1, id2):
         G.addEdge(f"{list_relations[i]}, ':', {list_people_related[i]}", f"{list_relations[i+1]}, ':', {list_people_related[i+1]}")
     G.visualize()
 
+    """ ou si on veut afficher les noms
+    G = GraphVisualization()
+    namex, surnamex = relations[list_people_related[0]]["name"], relations[list_people_related[1]]["surname"]
+    G.addEdge(f"{name1} {surname1}", f"{list_relations[0]}, ':', {namex} {surnamex}" )
+    for i in range(1, len(list_relations)-1):
+        G.addEdge(f"{list_relations[i]}, ':', {relations[list_people_related[i]]["name"]} {relations[list_people_related[i]]["surname"]}", f"{list_relations[i+1]}, ':',  {relations[list_people_related[i+1]]["name"]} {relations[list_people_related[i+1]]["surname"]}")
+    G.visualize()
+    """
 
 print(visualization("@I398@", "@I406@"))
