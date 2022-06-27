@@ -5,26 +5,14 @@
 # First networkx library is imported along with matplotlib
 import networkx as nx
 import matplotlib.pyplot as plt
-import json
-from Dijkstra_algo import Graph, dijkstra_algorithm, print_result
+from tree_inspector import file_reading, tree_analysis
 
 
-def visualization(id1, id2):
-    file_calculus = open('../Database/database_calculus.json')
-    init_graph = json.load(file_calculus)
-    file_calculus.close()
-
-    file_relations = open('../Database/database_conversion.json')
-    relations = json.load(file_relations)
-    file_relations.close()
+def path_visualization(database, id_1, id_2):
 
     family_graph = nx.Graph()
-
-    nodes = list(init_graph.keys())
-    people_graph = Graph(nodes, init_graph)
-
-    previous_nodes, shortest_path = dijkstra_algorithm(graph=people_graph, start_node=id1)
-    list_relations, list_people_related = print_result(previous_nodes, shortest_path, id1, id2, relations=relations)
+    init_graph, relations = file_reading(database)
+    list_relations, list_people_related = tree_analysis(id_1, id_2, init_graph, relations)
 
     # Contruction of the visualization
 
@@ -34,7 +22,10 @@ def visualization(id1, id2):
 
         for relation_type, related_person in related_persons.items():
 
-            if 'sibling' not in relation_type:
+            checker = 'sibling' not in relation_type
+            checker = checker and 'cousin' not in relation_type
+
+            if checker:
 
                 family_graph.add_node(related_person)
                 family_graph.add_edge(person_id, related_person, relation=relation_type)
@@ -59,4 +50,10 @@ def visualization(id1, id2):
     plt.savefig('test.png', dpi=500)
     plt.show(dpi=500)
 
-visualization("@I392@", "@I406@")
+def whole_visualisation(database):
+
+    family_graph = nx.Graph()
+
+
+
+path_visualization('database_queen', "@I395@", "@I1366@")

@@ -24,9 +24,9 @@ def photo_occur_detector(dict_occur):
 
 # ouverture de l'ancienne base de données
 
-    file_calculus = open('./Database/database_calculus.json')
+    file_calculus = open('Database/database_queen/database_calculus.json')
     calculus = json.load(file_calculus)
-    file_relations = open('./Database/database_conversion.json')
+    file_relations = open('Database/database_queen/database_conversion.json')
     relations = json.load(file_relations)
     individual = list(dict_occur.keys())[0]
     dict_occur_inside = list(dict_occur.values())[0]

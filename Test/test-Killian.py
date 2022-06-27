@@ -10,11 +10,11 @@ from Dijkstra_algo import Graph, dijkstra_algorithm, print_result
 
 
 def visualization(id1, id2):
-    file_calculus = open('../Database/database_calculus.json')
+    file_calculus = open('../Database/database_queen/database_calculus.json')
     init_graph = json.load(file_calculus)
     file_calculus.close()
 
-    file_relations = open('../Database/database_conversion.json')
+    file_relations = open('../Database/database_queen/database_conversion.json')
     relations = json.load(file_relations)
     file_relations.close()
 

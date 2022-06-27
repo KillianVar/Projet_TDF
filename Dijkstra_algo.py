@@ -138,11 +138,11 @@ def print_result(previous_nodes, shortest_path, start_node, target_node, relatio
 
 if __name__ == '__main__':
 
-    file_calculus = open('Database/database_calculus.json')
+    file_calculus = open('Database/database_queen/database_calculus.json')
     init_graph = json.load(file_calculus)
     file_calculus.close()
 
-    file_relations = open('Database/database_conversion.json')
+    file_relations = open('Database/database_queen/database_conversion.json')
     relations = json.load(file_relations)
     file_relations.close()
 

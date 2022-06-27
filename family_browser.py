@@ -12,7 +12,7 @@ import random as rd
 # code :
 
 # Path to your `.ged` file
-file_path = 'Database/Queen_Eliz_II.ged'
+file_path = 'Database/database_queen/Queen_Eliz_II.ged'
 
 # Initialize the parser
 gedcom_parser = Parser()
