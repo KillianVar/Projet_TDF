@@ -2,6 +2,7 @@ from gedcom.element.individual import IndividualElement
 from gedcom.parser import Parser
 from gedcom.element.element import Element
 from gedcom.element.family import FamilyElement
+import os
 
 
 gedcom_parser = Parser()
@@ -69,3 +70,21 @@ def chemin(bdd, id1, id2):
 
 
 print(chemin(bdd, '@I921@', '@I920@'))
+
+
+class Node:
+    def __init__(self, nodeValue):
+        self.subNodes = []
+        self.value = nodeValue
+
+    def addSubNode(self, node):
+        self.subNodes.append(node)
+
+    def getDirectoryNode(path):
+        node = Node(os.path.split(path)[1])
+    
+        if os.path.isdir(path):
+            for itemName in os.listdir(path):
+                fullPathName = os.path.join(path,itemName)
+                node.addSubNode(getDirectoryNode(fullPathName))
+        return node
