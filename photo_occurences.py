@@ -44,6 +44,9 @@ def photo_occur_detector(dict_occur):
 
         not_relation_count = 1
 
+        # Il est nécessaire ici de différencier des liens déjà existants
+        # ou bien des nouveaux liens que l'on va créer
+
         if people in dict_calculus.keys():
 
             new_dist = (exp(-2 * dict_occur_inside['people'] / s)) * dict_calculus[f"{people}"]
