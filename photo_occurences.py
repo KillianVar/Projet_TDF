@@ -61,7 +61,9 @@ def photo_occur_detector(dict_occur):
 
             not_relation_count += 1
 
-    tree_manager.saver_base(relations, 'database_conversion')  # enregistrement en écrasant l'ancienne base
+    # enregistrement en écrasant l'ancienne base
+
+    tree_manager.saver_base(relations, 'database_conversion')
     tree_manager.saver_base(calculus, 'database_calculus')
 
 photo_occur_detector(dict_occur_I101)
