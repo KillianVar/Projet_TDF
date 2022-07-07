@@ -56,4 +56,4 @@ def whole_visualisation(database):
 
 
 
-path_visualization('database_queen', "@I395@", "@I1366@")
+#path_visualization('database_queen', "@I395@", "@I1366@")
