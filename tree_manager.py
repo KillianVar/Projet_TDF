@@ -291,7 +291,7 @@ def graph_calulator(bdd):
 
 def saver_base(data, name):
 
-    path_dbb_content = f"../Database/{name}.json"
+    path_dbb_content = f"./Database/{name}.json"
     python_file = open(path_dbb_content, "w+")
     json.dump(data, python_file)
     python_file.close()
