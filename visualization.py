@@ -48,7 +48,7 @@ def path_visualization(database, id_1, id_2):
                                  edge_labels=relations_labels, label_pos=0.5, alpha=0.8)
     nx.draw_networkx_labels(family_graph, pos=positions, font_size=5)
     plt.savefig('test.png', dpi=500)
-    plt.show(dpi=500)
+    plt.show()
 
 def whole_visualisation(database):
 
