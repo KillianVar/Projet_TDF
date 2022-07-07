@@ -6,7 +6,7 @@ from os import path
 
 
 def reloader(database, file):
-    file_path = f'../Database/{database}/{file}'
+    file_path = f'./Database/{database}/{file}'
 
     bdd = tree_manager.gedcom_converter(file_path)
 
@@ -54,3 +54,5 @@ def tree_analysis(id_1, id_2, init_graph, relations):
     previous_nodes, shortest_path = dijkstra_algorithm(graph=people_graph, start_node=id_1)
     links, path = print_result(previous_nodes, shortest_path, id_1, id_2, relations=relations)
     return links, path
+
+reloader('database_family1', 'familiy1.ged')
