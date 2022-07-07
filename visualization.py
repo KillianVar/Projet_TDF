@@ -58,8 +58,4 @@ def path_visualization(database, id_1, id_2):
 
 
 
-<<<<<<< HEAD
-#path_visualization('database_queen', "@I395@", "@I1366@")
-=======
 path_visualization('database_family1', "@I27@", "@I36@")
->>>>>>> 5366d37786bb89de1e5e9e84c6b4ba63a1ef4361

@@ -234,6 +234,7 @@ def tree_linker(bdd):
                 for link_grandchildren, grandchildren in bdd[grandparent]['links'].items():
 
                     check_bol = 'grandchildren' in link_grandchildren and grandchildren is not person
+                    check_bol = check_bol and ('sibling' not in bdd[grandparent]['links'].keys())
 
                     if check_bol:
 
