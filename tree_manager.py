@@ -249,7 +249,7 @@ def graph_calulator(bdd):
 
     alpha = 1.
     beta = 1.5
-    gamma = 1.7
+    gamma = 1.4
     delta = 2.
 
     # bdd_calculus_intermediate
