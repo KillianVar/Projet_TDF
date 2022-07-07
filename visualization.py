@@ -14,11 +14,15 @@ def path_visualization(database, id_1, id_2):
     init_graph, relations = file_reading(database)
     list_relations, list_people_related = tree_analysis(id_1, id_2, init_graph, relations)
 
+
     # Contruction of the visualization
+
+    peoples_name = {}
 
     for person_id in list_people_related:
 
         related_persons = relations[person_id]['links']
+        peoples_name[person_id] = relations[person_id]['surname']
 
         for relation_type, related_person in related_persons.items():
 
@@ -27,6 +31,7 @@ def path_visualization(database, id_1, id_2):
 
             if checker:
 
+                peoples_name[related_person] = relations[related_person]['surname']
                 family_graph.add_node(related_person)
                 family_graph.add_edge(person_id, related_person, relation=relation_type)
 
@@ -41,6 +46,7 @@ def path_visualization(database, id_1, id_2):
 
     positions = nx.kamada_kawai_layout(family_graph)
     nx.draw_networkx_nodes(family_graph, pos=positions, node_size=30)
+    nx.draw_networkx_labels(family_graph, pos=positions, labels=peoples_name, font_size=9)
     nx.draw_networkx_edges(family_graph, pos=positions, width=0.5,  edge_color='black')
     nx.draw_networkx_edges(family_graph, pos=positions, width=2., edgelist=chosen_path,
             edge_color='red')
@@ -56,4 +62,4 @@ def whole_visualisation(database):
 
 
 
-path_visualization('database_queen', "@I395@", "@I1366@")
+path_visualization('database_family1', "@I27@", "@I36@")
