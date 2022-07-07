@@ -41,5 +41,16 @@ de la base de donnée
 - Séparation de l'analyseur d'arbre pour compléter les liens de la base de donnée de l'algorithme
 de création de la base de donnée
 - Implémentation de l'analyse de l'arbre pour ajouter les liens de grand-parents, petits enfants, oncles et tantes
-- Implémentation d'un algorithme donnant le lien sémantique entre les deux individus à partir des résultats
-obtenus par l'algorithme de Dijkstra
+- Implémentation d'un algorithme donnant le lien sémantique entre les deux individus à partir des résultats obtenus par l'algorithme de Dijkstra
+
+## v1.2.0 (15/06)
+
+- Création d'un fichier gedcom "maison" simplifié (5 générations) permettant de tester l'algorithme et s'assurer de sa fiabilité
+- Création d'un visualisateur de l'arbre à l'aide d'un module graphique afin que l'utilisateur puisse avoir une représentation claire de l'arbre généalogique
+- Création d'un algorithme indépendant ("photo_occurences") qui ajoute la possibilité dans le logiciel d'identifier des individus sur des photos et de modifier ainsi leur lien. Plus ils apparaissent ensemble sur de nombreuses photos plus leurs liens sont forts.
+- Essai de prise en compte d'une potentielle consanguinité dans l'algorithme déterminant les relations secondaires
+
+## v1.2.1 (17/06)
+
+- Ajout sur le visualisateur de l'arbre le lien privilégié entre deux individus trouvé par notre algorithme. Il s'affiche alors en rouge afin de permettre à l'utilisateur de remonter clairement ce lien
+- Affinage du calcul de la relation entre deux personnes identifées sur une photographie dans "photo_occurences"
