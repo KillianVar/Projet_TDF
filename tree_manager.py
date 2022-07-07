@@ -180,7 +180,7 @@ def tree_linker(bdd):
 
                 # let's add to the child new uncles and aunts :
 
-                for relation_type, related_person in aunt_links.items():
+                for relation_type, related_person in links_copy.items():
 
                     if 'sibling' in relation_type and related_person not in bdd[children]['links'].values():
 
