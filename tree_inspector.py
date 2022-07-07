@@ -6,7 +6,7 @@ from os import path
 
 
 def reloader(database, file):
-    file_path = f'../Database/{database}/{file}'
+    file_path = f'./Database/{database}/{file}'
 
     bdd = tree_manager.gedcom_converter(file_path)
 
