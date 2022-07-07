@@ -164,7 +164,9 @@ def tree_linker(bdd):
 
         for link_type, linked_person in links_copy.items():
 
-            if ('children' in link_type) and ('grand' not in link_type):
+            bool_link = 'grandchildren' not in link_type
+            bool_link = bool_link and 'child' in link_type
+            if bool_link:
 
                 children = linked_person
                 aunt_counter = 1
@@ -293,7 +295,7 @@ def graph_calulator(bdd):
 
 def saver_base(data, name):
 
-    path_dbb_content = f"./Database/{name}.json"
+    path_dbb_content = f"../Database/{name}.json"
     python_file = open(path_dbb_content, "w+")
     json.dump(data, python_file)
     python_file.close()
