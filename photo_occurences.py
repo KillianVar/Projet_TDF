@@ -1,4 +1,5 @@
 import json
+from math import exp
 import tree_manager
 
 
@@ -33,14 +34,22 @@ def photo_occur_detector(dict_occur):
 
     dict_indi = relations[f"{individual}"]
     dict_calculus = calculus[f"{individual}"]
+    s = 0
+
+    for value in dict_occur_inside.values():
+
+        s += value
 
     for people in dict_occur_inside.keys():
 
         not_relation_count = 1
 
+        # Il est nécessaire ici de différencier des liens déjà existants
+        # ou bien des nouveaux liens que l'on va créer
+
         if people in dict_calculus.keys():
 
-            new_dist = (1/dict_occur_inside[f"{people}"]) * dict_calculus[f"{people}"]
+            new_dist = (exp(-2 * dict_occur_inside['people'] / s)) * dict_calculus[f"{people}"]
             dict_calculus[f"{people}"] = new_dist
 
         else:
@@ -48,7 +57,7 @@ def photo_occur_detector(dict_occur):
             dict_link = dict_indi["links"]
             dict_link[f"photo_relation_{not_relation_count}"] = people    # ajout de la nouvelle relation
 
-            dict_calculus[f"{people}"] = 5 * (1/dict_occur_inside[f"{people}"])
+            dict_calculus[f"{people}"] = 5 * (exp(-2 * dict_occur_inside['people'] / s))
 
             not_relation_count += 1
 
