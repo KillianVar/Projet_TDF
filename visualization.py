@@ -56,10 +56,6 @@ def path_visualization(database, id_1, id_2):
     plt.savefig('test.png', dpi=500)
     plt.show()
 
-def whole_visualisation(database):
-
-    family_graph = nx.Graph()
-
 
 
 #path_visualization('database_queen', "@I395@", "@I1366@")
