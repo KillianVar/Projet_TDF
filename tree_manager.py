@@ -157,34 +157,34 @@ def tree_linker(bdd):
 
     # Adding aunts / uncles
 
-    for grandparent, grandparent_data in bdd.items():
+    for aunt, aunt_data in bdd.items():
 
-        grandparent_links = grandparent_data['links']
-        links_copy = grandparent_links.copy()
+        aunt_links = aunt_data['links']
+        links_copy = aunt_links.copy()
 
         for link_type, linked_person in links_copy.items():
 
-            if 'grandchildren' in link_type:
+            if ('children' in link_type) and ('grand' not in link_type):
 
-                grandchildren = linked_person
+                children = linked_person
 
                 aunt_counter = 1
 
-                # let's count the uncles and aunts the grandchild already has :
+                # let's count the uncles and aunts the child already has :
 
-                for relation_type, related_person in grandparent_links.items():
+                for relation_type, related_person in aunt_links.items():
 
                     if 'aunt_uncle' in relation_type:
 
                         aunt_counter += 1
 
-                # let's add to the grandchild new uncles and aunts :
+                # let's add to the child new uncles and aunts :
 
-                for relation_type, related_person in grandparent_links.items():
+                for relation_type, related_person in aunt_links.items():
 
-                    if 'sibling' in relation_type and related_person not in bdd[grandchildren]['links'].values():
+                    if 'sibling' in relation_type and related_person not in bdd[children]['links'].values():
 
-                        bdd[grandchildren]['links'][f'aunt_uncle_{aunt_counter}'] = related_person
+                        bdd[children]['links'][f'aunt_uncle_{aunt_counter}'] = related_person
 
     # adding nephews
 
